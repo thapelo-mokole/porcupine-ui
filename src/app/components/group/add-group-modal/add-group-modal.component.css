@@ -1,0 +1,6 @@
+:host {
+  display: block;
+}
+.no-margin-bottom {
+  margin-bottom: 0;
+}

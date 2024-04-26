@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Permission</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()" color="danger">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scroll-y="false">
+  <form #permissionForm="ngForm" (ngSubmit)="addPermission(permissionForm)">
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input type="text" name="shortDescription" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" color="success"
+      >Add Permission</ion-button
+    >
+  </form>
+</ion-content>
