@@ -10,24 +10,6 @@ import { LookupService } from 'src/app/services/lookup.service';
 
 @Component({
   selector: 'app-add-group-modal',
-  standalone: true,
-  imports: [
-    IonButtons,
-    IonTitle,
-    IonContent,
-    IonToolbar,
-    IonCheckbox,
-    IonInput,
-    IonLabel,
-    IonItem,
-    IonButton,
-    IonHeader,
-    IonSelect,
-    IonSelectOption,
-    CommonModule,
-    FormsModule,
-    NgMultiSelectDropDownModule
-  ],
   templateUrl: 'add-group-modal.component.html',
   styleUrl: './add-group-modal.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

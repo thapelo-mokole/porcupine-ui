@@ -8,7 +8,8 @@
             <ion-card-title>{{ group.shortDescription }}</ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <p>{{ group.longDescription }}</p>
+            <p><b>Info: </b>{{ group.longDescription }}</p>
+            <p><b>Users: </b> {{ group.users.length }}</p>
             <hr>
 
             <ion-list *ngIf="group.permissions.length >= 1">
