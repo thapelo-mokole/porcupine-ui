@@ -1,6 +1,6 @@
 <ion-content color="light"  class="ion-padding">
 
-  <ion-list>
+  <ion-list *ngIf="permissions.length >= 1">
     <ion-row wrap>
       <ion-col
         size="12"
@@ -18,7 +18,7 @@
           <ion-card-content class="card-content">
             <p>permission</p>
             <div class="custom-buttons">
-              <ion-button color="secondary" (click)="editPermission(permission)"
+              <ion-button color="secondary" (click)="editPermission(permission.id, permission)"
                 >Edit</ion-button
               >
               <ion-button color="danger" (click)="deletePermission(permission.id)"

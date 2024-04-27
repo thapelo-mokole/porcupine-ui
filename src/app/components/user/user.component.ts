@@ -1,28 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
-import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { AddUserModalComponent } from './add-user-modal/add-user-modal.component';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
+import { CreateUpdateUserDto, UserResponseDto } from 'src/app/models/user.model';
+import { GroupResponseDto } from 'src/app/models/group.model';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
 })
-export class UserComponent  implements OnInit {
+export class UserComponent implements OnInit {
 
   @ViewChild('userForm') userForm!: NgForm;
-  users: User[] = [];
+  users: UserResponseDto[] = [];
 
   constructor(
     private userService: UserService,
     private modalController: ModalController,
-    private router: Router,
     private toastController: ToastController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadUsers();
@@ -35,17 +34,27 @@ export class UserComponent  implements OnInit {
     });
   }
 
-  addUser(userData: User) {
+  addUser(userData: CreateUpdateUserDto) {
     const newUser = { ...userData, materialAssigned: [] };
-    this.userService.addUser(newUser as User).subscribe(() => {
+    this.userService.addUser(newUser as CreateUpdateUserDto).subscribe(() => {
       this.loadUsers();
       this.userForm.reset();
       this.presentToast('User added successfully');
     });
   }
 
-  updateUser(user: User) {
-    this.userService.updateUser(user).subscribe(() => {
+  updateUser(id: string, user: CreateUpdateUserDto, updatedGroups: GroupResponseDto[]) {
+
+    // Extract groups from the user object
+    const { groups, ...userData } = user;
+
+    // Map groups to their IDs
+    const groupIds = updatedGroups.map((group: { id: string; }) => group.id);
+
+    // Create a new object with the updated groups
+    const updateGroup = { ...userData, groups: groupIds };
+
+    this.userService.updateUser(id, updateGroup).subscribe(() => {
       this.loadUsers();
     });
   }
@@ -57,7 +66,7 @@ export class UserComponent  implements OnInit {
     });
   }
 
-  async editUser(user: User) {
+  async editUser(user: UserResponseDto) {
     const modal = await this.modalController.create({
       component: EditUserModalComponent,
       componentProps: { user },
@@ -67,7 +76,7 @@ export class UserComponent  implements OnInit {
 
     const { data } = await modal.onWillDismiss();
     if (data?.updatedUser) {
-      this.updateUser(data.updatedUser);
+      this.updateUser(user.id, data.updatedUser, data.updatedGroups);
       this.presentToast('User edited successfully');
     }
   }
@@ -76,6 +85,7 @@ export class UserComponent  implements OnInit {
   async openAddUserModal() {
     const modal = await this.modalController.create({
       component: AddUserModalComponent,
+
     });
 
     await modal.present();

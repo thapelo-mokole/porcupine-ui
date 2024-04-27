@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user.model';
+import { CreateUpdateUserDto, CreateUpdateUserResponseDto, UserResponseDto } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,13 @@ export class UserService {
     return this.http.get<any>(url);
   }
 
-  addUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+  addUser(user: CreateUpdateUserDto): Observable<CreateUpdateUserResponseDto> {
+    return this.http.post<CreateUpdateUserResponseDto>(this.apiUrl, user);
   }
 
-  updateUser(user: User): Observable<User> {
-    const url = `${this.apiUrl}/${user.id}`;
-    return this.http.put<User>(url, user);
+  updateUser(id: string, user: CreateUpdateUserDto): Observable<CreateUpdateUserResponseDto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<CreateUpdateUserResponseDto>(url, user);
   }
 
   deleteUser(id: string): Observable<any> {

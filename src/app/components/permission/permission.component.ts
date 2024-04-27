@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal, ModalController, ToastController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
-import { Permission } from 'src/app/models/permission.model';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PermissionService } from 'src/app/services/permission.service';
 import { EditPermissionModalComponent } from './edit-permission-modal/edit-permission-modal.component';
 import { AddPermissionModalComponent } from './add-permission-modal/add-permission-modal.component';
+import { CreateUpdatePermissionDto, PermissionResponseDto } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-permission',
@@ -15,12 +14,11 @@ import { AddPermissionModalComponent } from './add-permission-modal/add-permissi
 })
 export class PermissionComponent  implements OnInit {
   @ViewChild('permissionForm') permissionForm!: NgForm;
-  permissions: Permission[] = [];
+  permissions: PermissionResponseDto[] = [];
 
   constructor(
     private permissionService: PermissionService,
     private modalController: ModalController,
-    private router: Router,
     private toastController: ToastController
   ) {}
 
@@ -35,17 +33,17 @@ export class PermissionComponent  implements OnInit {
     });
   }
 
-  addPermission(permissionData: Permission) {
+  addPermission(permissionData: CreateUpdatePermissionDto) {
     const newPermission = { ...permissionData, materialAssigned: [] };
-    this.permissionService.addPermission(newPermission as Permission).subscribe(() => {
+    this.permissionService.addPermission(newPermission as CreateUpdatePermissionDto).subscribe(() => {
       this.loadPermissions();
       this.permissionForm.reset();
       this.presentToast('Permission added successfully');
     });
   }
 
-  updatePermission(permission: Permission) {
-    this.permissionService.updatePermission(permission).subscribe(() => {
+  updatePermission(id: string, permission: CreateUpdatePermissionDto) {
+    this.permissionService.updatePermission(id, permission).subscribe(() => {
       this.loadPermissions();
     });
   }
@@ -57,7 +55,7 @@ export class PermissionComponent  implements OnInit {
     });
   }
 
-  async editPermission(permission: Permission) {
+  async editPermission(id: string, permission: CreateUpdatePermissionDto) {
     const modal = await this.modalController.create({
       component: EditPermissionModalComponent,
       componentProps: { permission },
@@ -67,7 +65,7 @@ export class PermissionComponent  implements OnInit {
 
     const { data } = await modal.onWillDismiss();
     if (data?.updatedPermission) {
-      this.updatePermission(data.updatedPermission);
+      this.updatePermission(id, data.updatedPermission);
       this.presentToast('Permission edited successfully');
     }
   }

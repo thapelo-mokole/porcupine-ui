@@ -10,7 +10,7 @@ import { EditGroupModalComponentModule } from './edit-group-modal/edit-group-mod
 
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, NoDataComponentModule, EditGroupModalComponentModule ],
+  imports: [ CommonModule, FormsModule, IonicModule, NoDataComponentModule, EditGroupModalComponentModule, ],
   declarations: [GroupComponent],
   exports: [GroupComponent]
 })

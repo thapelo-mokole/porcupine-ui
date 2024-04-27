@@ -1,4 +1,4 @@
-export interface BaseModel {
+export interface BaseResponseDto {
   id: string;
   createdBy: string;
   createdOn: Date;

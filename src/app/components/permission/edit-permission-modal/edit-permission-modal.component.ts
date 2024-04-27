@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { Permission } from 'src/app/models/permission.model';
+import { CreateUpdatePermissionDto } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-edit-permission-modal',
@@ -12,7 +11,7 @@ import { Permission } from 'src/app/models/permission.model';
 })
 export class EditPermissionModalComponent {
 
-  @Input() permission!: Permission;
+  @Input() permission!: CreateUpdatePermissionDto;
 
   constructor(private modalController: ModalController) { }
 

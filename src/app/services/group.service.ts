@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Group } from '../models/group.model';
+import { CreateUpdateGroupDto, CreateUpdateGroupResponseDto, GroupResponseDto } from '../models/group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,13 @@ export class GroupService {
     return this.http.get<any>(url);
   }
 
-  addGroup(group: Group): Observable<Group> {
-    return this.http.post<Group>(this.apiUrl, group);
+  addGroup(group: CreateUpdateGroupDto): Observable<CreateUpdateGroupResponseDto> {
+    return this.http.post<CreateUpdateGroupResponseDto>(this.apiUrl, group);
   }
 
-  updateGroup(group: Group): Observable<Group> {
-    const url = `${this.apiUrl}/${group.id}`;
-    return this.http.put<Group>(url, group);
+  updateGroup(id: string, group: CreateUpdateGroupDto): Observable<CreateUpdateGroupResponseDto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<CreateUpdateGroupResponseDto>(url, group);
   }
 
   deleteGroup(id: string): Observable<any> {

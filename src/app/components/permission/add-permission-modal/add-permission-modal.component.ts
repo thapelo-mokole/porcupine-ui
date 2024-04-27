@@ -25,7 +25,7 @@ export class AddPermissionModalComponent {
   addPermission(permissionForm: NgForm) {
     if (permissionForm.valid) {
       const permissionData = permissionForm.value;
-      const newPermission = { ...permissionData, materialAssigned: [] };
+      const newPermission = { ...permissionData };
 
       this.permissionService.addPermission(newPermission).subscribe(
         () => {

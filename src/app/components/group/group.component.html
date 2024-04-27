@@ -1,29 +1,30 @@
-<ion-content color="light"  class="ion-padding">
+<ion-content color="light" class="ion-padding">
 
-  <ion-list>
+  <ion-list *ngIf="groups.length >= 1">
     <ion-row wrap>
-      <ion-col
-        size="12"
-        size-md="6"
-        size-lg="4"
-        size-xl="3"
-        *ngFor="let group of groups"
-      >
+      <ion-col size="12" size-md="6" size-lg="4" size-xl="3" *ngFor="let group of groups">
         <ion-card class="group-card">
           <ion-card-header>
-            <ion-card-title
-              >{{ group.shortDescription }}</ion-card-title
-            >
+            <ion-card-title>{{ group.shortDescription }}</ion-card-title>
           </ion-card-header>
           <ion-card-content class="card-content">
-            <p>group</p>
+            <p>{{ group.longDescription }}</p>
+            <hr>
+
+            <ion-list *ngIf="group.permissions.length >= 1">
+              <b>
+                <p><b>Linked permission(s)</b></p>
+              </b>
+              <ion-item *ngFor="let permission of group.permissions">
+                {{ permission.shortDescription }}
+              </ion-item>
+            </ion-list>
+
+            <b *ngIf="group.permissions.length === 0">Group not linked to any permission(s)</b>
+
             <div class="custom-buttons">
-              <ion-button color="secondary" (click)="editGroup(group)"
-                >Edit</ion-button
-              >
-              <ion-button color="danger" (click)="deleteGroup(group.id)"
-                >Delete</ion-button
-              >
+              <ion-button color="secondary" (click)="editGroup(group)">Edit</ion-button>
+              <ion-button color="danger" (click)="deleteGroup(group.id)">Delete</ion-button>
             </div>
           </ion-card-content>
         </ion-card>

@@ -8,11 +8,12 @@ import { UserComponent } from './user.component';
 import { NoDataComponentModule } from 'src/app/utils/no-data/no-data.module';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { AddUserModalComponent } from './add-user-modal/add-user-modal.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, NoDataComponentModule],
+  imports: [CommonModule, FormsModule, IonicModule, NoDataComponentModule, NgMultiSelectDropDownModule],
   declarations: [UserComponent, AddUserModalComponent, EditUserModalComponent],
   exports: [UserComponent]
 })
-export class UserComponentModule {}
+export class UserComponentModule { }

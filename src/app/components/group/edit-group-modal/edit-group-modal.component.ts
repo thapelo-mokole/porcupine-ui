@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { Group } from 'src/app/models/group.model';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { GroupResponseDto } from 'src/app/models/group.model';
+import { PermissionResponseDto } from 'src/app/models/permission.model';
+import { LookupService } from 'src/app/services/lookup.service';
 
 @Component({
   selector: 'app-edit-group-modal',
@@ -10,14 +13,51 @@ import { Group } from 'src/app/models/group.model';
   styleUrl: './edit-group-modal.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditGroupModalComponent {
-  @Input() group!: Group;
+export class EditGroupModalComponent implements OnInit {
+  @Input() group!: GroupResponseDto;
 
-  constructor(private modalController: ModalController) { }
+  permissions: PermissionResponseDto[] = [];
+  selectedPermissions: PermissionResponseDto[] = [];
+
+  dropdownSettings: IDropdownSettings = {};
+
+  constructor(
+    private modalController: ModalController,
+    private lookupService: LookupService
+  ) { }
+
+  ngOnInit() {
+    this.selectedPermissions = this.group.permissions;
+    this.loadPermissions();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'shortDescription',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 99,
+      allowSearchFilter: false
+    };
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+
+  loadPermissions() {
+    this.lookupService.getAllPermissions().subscribe((data) => {
+      this.permissions = data['result'];
+    });
+  }
 
   onSubmit(form: NgForm) {
     this.modalController.dismiss({
-      updatedGroup: this.group
+      updatedGroup: this.group,
+      updatedPermissions: this.selectedPermissions
     });
   }
 

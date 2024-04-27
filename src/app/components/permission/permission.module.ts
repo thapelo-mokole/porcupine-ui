@@ -10,8 +10,8 @@ import { EditPermissionModalComponentModule } from './edit-permission-modal/edit
 
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, IonicModule, NoDataComponentModule, EditPermissionModalComponentModule ],
+  imports: [CommonModule, FormsModule, IonicModule, NoDataComponentModule, EditPermissionModalComponentModule],
   declarations: [PermissionComponent],
   exports: [PermissionComponent]
 })
-export class PermissionComponentModule {}
+export class PermissionComponentModule { }

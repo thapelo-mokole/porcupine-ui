@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll-y="false">
+<ion-content class="ion-padding">
 
   <form #editUserForm="ngForm" (ngSubmit)="onSubmit(editUserForm)">
 
@@ -32,17 +32,13 @@
     </ion-item>
 
     <ion-item>
-      <ion-toggle  name="emailConfirmed" [(ngModel)]="user.emailConfirmed">Confirmed Email</ion-toggle>
+      <ion-toggle name="emailConfirmed" [(ngModel)]="user.emailConfirmed">Confirmed Email</ion-toggle>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Groups</ion-label>
-      <ion-select aria-label="Fruit" placeholder="Select all Groups that apply" [multiple]="true">
-        <ion-select-option value="apples">Apples</ion-select-option>
-        <ion-select-option value="oranges">Oranges</ion-select-option>
-        <ion-select-option value="bananas">Bananas</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ng-multiselect-dropdown placeholder="'Select all groups that apply'" [settings]="dropdownSettings"
+      [data]="groups" name="groups" [(ngModel)]="selectedGroups" (onSelect)="onItemSelect($event)"
+      (onSelectAll)="onSelectAll($event)">
+    </ng-multiselect-dropdown>
 
     <ion-button type="submit" expand="block" color="success">Update User</ion-button>
   </form>

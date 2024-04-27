@@ -7,28 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll-y="false">
+<ion-content class="ion-padding">
 
   <form #editGroupForm="ngForm" (ngSubmit)="onSubmit(editGroupForm)">
 
     <ion-item>
-      <ion-label position="floating">Group Description</ion-label>
+      <ion-label position="floating">Short Description</ion-label>
       <ion-input type="text" name="shortDescription" [(ngModel)]="group.shortDescription" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Group Long-Description</ion-label>
+      <ion-label position="floating">Long Description</ion-label>
       <ion-input type="text" name="longDescription" [(ngModel)]="group.longDescription" required></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Permissions</ion-label>
-      <ion-select aria-label="Fruit" placeholder="Select all permissions that apply" [multiple]="true">
-        <ion-select-option value="apples">Apples</ion-select-option>
-        <ion-select-option value="oranges">Oranges</ion-select-option>
-        <ion-select-option value="bananas">Bananas</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ng-multiselect-dropdown placeholder="'Select all permissions that apply'" [settings]="dropdownSettings"
+      [data]="permissions" name="permissions" [(ngModel)]="selectedPermissions" (onSelect)="onItemSelect($event)"
+      (onSelectAll)="onSelectAll($event)">
+    </ng-multiselect-dropdown>
+
 
     <ion-button type="submit" expand="block" color="success">Update Group</ion-button>
   </form>

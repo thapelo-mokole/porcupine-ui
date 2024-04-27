@@ -1,6 +1,8 @@
-:host {
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/* :host {
   display: block;
 }
 .no-margin-bottom {
   margin-bottom: 0;
-}
+} */

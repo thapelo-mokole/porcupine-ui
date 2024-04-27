@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Permission } from '../models/permission.model';
 import { environment } from 'src/environments/environment';
+import { CreateUpdatePermissionDto, CreateUpdatePermissionResponseDto, PermissionResponseDto } from '../models/permission.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,13 @@ export class PermissionService {
     return this.http.get<any>(url);
   }
 
-  addPermission(permission: Permission): Observable<Permission> {
-    return this.http.post<Permission>(this.apiUrl, permission);
+  addPermission(permission: CreateUpdatePermissionDto): Observable<CreateUpdatePermissionResponseDto> {
+    return this.http.post<CreateUpdatePermissionResponseDto>(this.apiUrl, permission);
   }
 
-  updatePermission(permission: Permission): Observable<Permission> {
-    const url = `${this.apiUrl}/${permission.id}`;
-    return this.http.put<Permission>(url, permission);
+  updatePermission(id: string, permission: CreateUpdatePermissionDto): Observable<CreateUpdatePermissionResponseDto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<CreateUpdatePermissionResponseDto>(url, permission);
   }
 
   deletePermission(id: string): Observable<any> {
